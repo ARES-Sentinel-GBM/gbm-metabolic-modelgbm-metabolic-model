@@ -20,15 +20,14 @@ jobs:
         python-version: '3.10'
 
     - name: Install dependencies
-# Usiamo pip per velocità nell'Action, installando i core necessari
       run: |
         python -m pip install --upgrade pip
         pip install pandas numpy matplotlib cobra optlang lxml
 
-    - name: Run Metabolic Pipeline & Audit
+    - name: Run Metabolic Pipeline
+      env:
+        PYTHONPATH: ${{ github.workspace }}
       run: |
-# Esporta il path per trovare i moduli in src e tests
-        export PYTHONPATH=$PYTHONPATH:$(pwd)
         python pipeline.py
 
     - name: Check Audit Results
